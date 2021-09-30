@@ -3,6 +3,19 @@
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+import axios from 'axios';
+
+axios.get('https://api.github.com/users/Sug4rSku11')
+.then(resp => {
+  console.log(resp);
+  
+})
+.catch(err => {
+  console.error(err);
+})
+.finally(() => {
+  console.log(`Something is working...`);
+})
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -28,8 +41,19 @@
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
-
+const followersArray = [
+  'https://api.github.com/users/tetondan',
+  'https://api.github.com/users/dustinmyers',
+  'https://api.github.com/users/justsml',
+  'https://api.github.com/users/luishrd',
+  'https://api.github.com/users/bigknell',
+];
+followersArray.forEach(item => {
+  axios.get(item)
+  .then(resp => {
+  
+  })
+})
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
     Using DOM methods and properties, create and return the following markup:
@@ -49,6 +73,8 @@ const followersArray = [];
       </div>
     </div>
 */
+
+
 
 /*
   List of LS Instructors Github username's:
