@@ -3,18 +3,17 @@
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+
 import axios from 'axios';
 
 axios.get('https://api.github.com/users/Sug4rSku11')
-.then(resp => {
-  console.log(resp);
-  
+.then(res => {
+  const GitHubCard = cardMaker(res.data)
+  console.log(res);
+  document.querySelector('.cards').appendChild(GitHubCard);
 })
 .catch(err => {
-  console.error(err);
-})
-.finally(() => {
-  console.log(`Something is working...`);
+  console.log(err);
 })
 
 /*
@@ -48,33 +47,85 @@ const followersArray = [
   'https://api.github.com/users/luishrd',
   'https://api.github.com/users/bigknell',
 ];
-followersArray.forEach(item => {
+followersArray.forEach(item=>{
   axios.get(item)
-  .then(resp => {
-  
+  .then(res=>{
+    console.log('Something works...');
+    const manyCards = cardMaker(res.data)
+    document.querySelector('.cards').appendChild(manyCards)
+  })
+  .catch(err=>{
+    console.log(err);
   })
 })
-/*
-  STEP 3: Create a function that accepts a single object as its only argument.
-    Using DOM methods and properties, create and return the following markup:
+// /*
+//   STEP 3: Create a function that accepts a single object as its only argument.
+//     Using DOM methods and properties, create and return the following markup:
 
-    <div class="card">
-      <img src={image url of user} />
-      <div class="card-info">
-        <h3 class="name">{users name}</h3>
-        <p class="username">{users user name}</p>
-        <p>Location: {users location}</p>
-        <p>Profile:
-          <a href={address to users github page}>{address to users github page}</a>
-        </p>
-        <p>Followers: {users followers count}</p>
-        <p>Following: {users following count}</p>
-        <p>Bio: {users bio}</p>
-      </div>
-    </div>
-*/
+//     <div class="card">
+//       <img src={image url of user} />
+//       <div class="card-info">
+//         <h3 class="name">{users name}</h3>
+//         <p class="username">{users user name}</p>
+//         <p>Location: {users location}</p>
+//         <p>Profile:
+//           <a href={address to users github page}>{address to users github page}</a>
+//         </p>
+//         <p>Followers: {users followers count}</p>
+//         <p>Following: {users following count}</p>
+//         <p>Bio: {users bio}</p>
+//       </div>
+//     </div>
+// */
+
+function cardMaker(obj) {
+  // console.log(obj);
+  //creating elements
+const card = document.createElement('div');
+const img = document.createElement('img');
+const cardInfo = document.createElement('div');
+const username = document.createElement('h3');
+const gitname = document.createElement('p');
+const location = document.createElement('p');
+const profile = document.createElement('p');
+const  link = document.createElement('a');
+const followers = document.createElement('p');
+const following = document.createElement('p');
+const bio = document.createElement('p');
+// console.log(card);
 
 
+ 
+card.appendChild(img);
+card.appendChild(cardInfo);
+cardInfo.appendChild(username);
+cardInfo.appendChild(gitname);
+cardInfo.appendChild(location);
+cardInfo.appendChild(profile);
+profile.appendChild(link);
+cardInfo.appendChild(followers);
+cardInfo.appendChild(following);
+cardInfo.appendChild(bio);
+
+
+card.classList.add('card');
+cardInfo.classList.add('card-info');
+username.classList.add('name');
+gitname.classList.add('username');
+
+img.src = obj.avatar_url;
+username.textContent = obj.name;
+gitname.textContent = obj.login;
+location.textContent = `Location: ${obj.location}`;
+profile.textContent = 'Profile:';
+link.textContent = obj.html_url;
+link.setAttribute('href', `${obj.html_url}`);
+followers.textContent = `Followers: ${obj.followers}`;
+following.textContent = `Following: ${obj.following}`;
+bio.textContent = `Bio: ${obj.bio}`;
+
+return card;
+}
 
 /*
   List of LS Instructors Github username's:
