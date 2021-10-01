@@ -9,7 +9,7 @@ import axios from 'axios';
 axios.get('https://api.github.com/users/Sug4rSku11')
 .then(res => {
   const GitHubCard = cardMaker(res.data)
-  console.log(res);
+  // console.log(res);
   document.querySelector('.cards').appendChild(GitHubCard);
 })
 .catch(err => {
@@ -50,7 +50,7 @@ const followersArray = [
 followersArray.forEach(item=>{
   axios.get(item)
   .then(res=>{
-    console.log('Something works...');
+    // console.log('Something works...');
     const manyCards = cardMaker(res.data)
     document.querySelector('.cards').appendChild(manyCards)
   })
@@ -80,7 +80,6 @@ followersArray.forEach(item=>{
 
 function cardMaker(obj) {
   // console.log(obj);
-  //creating elements
 const card = document.createElement('div');
 const img = document.createElement('img');
 const cardInfo = document.createElement('div');
@@ -88,7 +87,7 @@ const username = document.createElement('h3');
 const gitname = document.createElement('p');
 const location = document.createElement('p');
 const profile = document.createElement('p');
-const  link = document.createElement('a');
+const link = document.createElement('a');
 const followers = document.createElement('p');
 const following = document.createElement('p');
 const bio = document.createElement('p');
@@ -117,13 +116,15 @@ img.src = obj.avatar_url;
 username.textContent = obj.name;
 gitname.textContent = obj.login;
 location.textContent = `Location: ${obj.location}`;
-profile.textContent = 'Profile:';
+profile.textContent = `Profile: `;
+link.setAttribute(`href`, `${obj.html_url}`)
 link.textContent = obj.html_url;
-link.setAttribute('href', `${obj.html_url}`);
 followers.textContent = `Followers: ${obj.followers}`;
 following.textContent = `Following: ${obj.following}`;
 bio.textContent = `Bio: ${obj.bio}`;
 
+console.log(profile);
+console.log(link);
 return card;
 }
 
